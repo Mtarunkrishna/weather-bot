@@ -1,12 +1,11 @@
 'use strict';
 
 const express = require('express');
-
+const config=require('./config');
 const server = express();
 const PORT= process.env.PORT || 3000;
+const FBeamer=require('./fbeamer');
 
-server.get('/',(req,res) => {
-    res.send("hello");
-   res.end();
-});
+const f=new FBeamer(config.fb);
+server.get('/',(req,res) => f.registerHook(req,res));
 server.listen(PORT, () => console.log(`FBeamer Bot Service running on Port ${PORT}`));
