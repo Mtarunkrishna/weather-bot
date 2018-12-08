@@ -10,7 +10,7 @@ const sendResponse=require('./vanilla_bot');
 const f=new FBeamer(config.fb);
 server.get('/',(req,res) => f.registerHook(req,res));
 server.post('/', bodyParser.json({
-    verify: f.signatureVerifier,
+    verify: f.signatureVerifier.call(f),
 }));
 server.post('/',(req,res,next)=>{
     return f.incoming(req,res,async data=>{
