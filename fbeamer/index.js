@@ -1,11 +1,12 @@
 'use strict';
-
+const crypto = require('crypto');
 class FBeamer{
-    constructor({pageAccessToken,verifyToken}){
+    constructor({pageAccessToken,verifyToken,appSecret}){
         try{
-            if(pageAccessToken && verifyToken){
+            if(pageAccessToken && verifyToken && appSecret){
                 this.pageAccessToken=pageAccessToken;
                 this.verifyToken=verifyToken;
+                this.appSecret=appSecret;
             }else{
                 throw "One or more tokens/credentials are missing.";
             }
@@ -28,6 +29,23 @@ class FBeamer{
             }
         }catch(e){
             console.log(e);
+        }
+    }
+    signatureVerifier(req,res,buf){
+        //Returns a function that verifies signature.
+        return (req,res,buf) =>{
+            if(req.method==='POST'){
+                try{
+                    let signature=req.headers['x-hub-signature'];
+                    if(!signature){
+                        throw "Signature not received.";
+                    }else{
+                        let hash=crypto.createHmac('sha1',)
+                    }
+                }catch(e){
+                    console.log(e);
+                }
+            }
         }
     }
 }

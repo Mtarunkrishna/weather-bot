@@ -1,6 +1,7 @@
 {
   "fb": {
     "pageAccessToken":"",
-    "verifyToken":""
+    "verifyToken":"",
+    "appSecret": ""
   }
 }

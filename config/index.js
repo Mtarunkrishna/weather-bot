@@ -4,7 +4,8 @@ if(process.env.NODE_ENV === "production"){
     module.exports = {
         fb:{
             pageAccessToken:process.env.pageAccessToken,
-            verifyToken:process.env.verifyToken
+            verifyToken:process.env.verifyToken,
+            appSecret: process.env.appSecret,
         }
     }
 }else{
