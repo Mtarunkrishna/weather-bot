@@ -58,7 +58,7 @@ let forecastWeather= (response, data) =>{
         let location= `${resp.location.city}, ${resp.location.country}`;
         let regEx = new RegExp(data.weather,"i");
         let testConditions = regEx.test(forecast.text);
-        return `${testConditions ? 'Yes' : 'No'}, ${getPrefix(forecast.code,'future')} ${forecast.text.toLowerCase()} ${data.time} in ${location}`;
+        return `${testConditions ? 'Yes' : 'No'}, ${getPrefix(forecast.code,'future')} ${forecast.text.toLowerCase()} ${data.time} in ${location}.`;
     }else{
         return "I don't seem to know anything about this place... Sorry :(";
     }
