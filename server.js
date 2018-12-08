@@ -13,8 +13,15 @@ server.post('/', bodyParser.json({
     verify: f.signatureVerifier,
 }));
 server.post('/',(req,res,next)=>{
-    return f.incoming(req,res,data=>{
-        console.log(data);
+    return f.incoming(req,res,async data=>{
+        try{
+            if(data.content==='hi there'){
+                await f.txt(data.sender,"Hey from Vanilla!");
+                await f.img(data.sender,"https://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg");
+            }
+        }catch(e){
+            console.log(e);
+        }
     });
 });
 server.listen(PORT, () => console.log(`FBeamer Bot Service running on Port ${PORT}`));

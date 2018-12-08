@@ -1,5 +1,7 @@
 'use strict';
 const crypto = require('crypto');
+const request=require('request');
+const apiVersion='v2.6';
 class FBeamer{
     constructor({pageAccessToken,verifyToken,appSecret}){
         try{
@@ -81,7 +83,53 @@ class FBeamer{
         }
     }
     sendMessage(payload){
-
+        return new Promise((resolve,reject)=>{
+          request({
+              url:`https://graph.facebook.com/${apiVersion}/me/messages`,
+              qs:{
+                  access_token:this.pageAccessToken
+              },
+              method:"POST",
+              json:payload
+          },(error,response,body)=>{
+                if(!error && response.statusCode === 200){
+                    resolve({
+                       mid: body.message_id
+                    });
+                }else{
+                    reject(error);
+                }
+          })
+        })
+    }
+    txt(id,text,messaging_type='RESPONSE'){
+        let obj={
+            messaging_type,
+            recipient:{
+                id
+            },
+            message:{
+                text
+            }
+        };
+        return this.sendMessage(obj);
+    }
+    img(id,url,messaging_type='RESPONSE'){
+        let obj={
+          messaging_type,
+          recipient: {
+              id
+          },
+            message: {
+              attachment:{
+                  type: 'image',
+                  payload:{
+                      url
+                  }
+              }
+            }
+        };
+        return this.sendMessage(obj);
     }
 }
 module.exports=FBeamer;
