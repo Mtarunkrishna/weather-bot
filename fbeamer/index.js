@@ -76,7 +76,7 @@ class FBeamer{
                 sender,
                 type: 'text',
                 content: message.text
-            }
+            };
             return obj;
         }
     }
