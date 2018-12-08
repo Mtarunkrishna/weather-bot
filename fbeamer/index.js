@@ -51,5 +51,24 @@ class FBeamer{
             }
         }
     }
+    incoming(req,res){
+        res.sendStatus(200);
+        if(req.body.object==='page' && req.body.entry){
+            let data=req.body;
+            console.log(data);
+            data.entry.forEach(pageObj => {
+                if(pageObj.messaging){
+                    pageObj.messaging.forEach(messageObj =>{
+                        console.log(messageObj);
+                        if(messageObj.postback){
+                            //handle postbacks
+                        }else{
+
+                        }
+                    })
+                }
+            })
+        }
+    }
 }
 module.exports=FBeamer;
