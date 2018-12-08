@@ -80,5 +80,8 @@ class FBeamer{
             return obj;
         }
     }
+    sendMessage(payload){
+
+    }
 }
 module.exports=FBeamer;
