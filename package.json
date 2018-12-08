@@ -2,11 +2,14 @@
   "name": "vanilla",
   "version": "1.0.0",
   "description": "Vanilla Weather bot",
-  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "engines": {
+    "node": "10.11.0"
+  },
+  "author": "Anuj Diwan",
   "license": "ISC",
   "dependencies": {
     "body-parser": "1.18.3",
