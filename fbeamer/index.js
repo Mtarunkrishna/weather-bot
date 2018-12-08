@@ -40,7 +40,10 @@ class FBeamer{
                     if(!signature){
                         throw "Signature not received.";
                     }else{
-                        let hash=crypto.createHmac('sha1',)
+                        let hash=crypto.createHmac('sha1',this.appSecret).update(buf,'utf-8');
+                        if(hash.digest('hex') !== signature.split("=")[1]){
+                            throw "Invalid signature";
+                        }
                     }
                 }catch(e){
                     console.log(e);
