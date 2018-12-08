@@ -31,43 +31,53 @@ class FBeamer{
             console.log(e);
         }
     }
-    signatureVerifier(req,res,buf){
+    signatureVerifier(){
         //Returns a function that verifies signature.
-        return (req,res,buf) =>{
-            if(req.method==='POST'){
-                try{
-                    let signature=req.headers['x-hub-signature'];
-                    if(!signature){
-                        throw "Signature not received.";
-                    }else{
-                        let hash=crypto.createHmac('sha1',this.appSecret).update(buf,'utf-8');
-                        if(hash.digest('hex') !== signature.split("=")[1]){
-                            throw "Invalid signature";
+        return (req, res, buf) => {
+            if(req.method === 'POST') {
+                try {
+                    let signature = req.headers['x-hub-signature'];
+                    if(!signature) {
+                        throw "Signature not received";
+                    } else {
+                        let hash = crypto.createHmac('sha1', this.appSecret).update(buf, 'utf8');
+                        if(hash.digest('hex') !== signature.split("=")[1]) {
+                            throw "Invalid signature!";
                         }
                     }
-                }catch(e){
+                } catch (e) {
                     console.log(e);
                 }
             }
         }
     }
-    incoming(req,res){
+    incoming(req,res,cb){
         res.sendStatus(200);
         if(req.body.object==='page' && req.body.entry){
             let data=req.body;
-            console.log(data);
             data.entry.forEach(pageObj => {
                 if(pageObj.messaging){
                     pageObj.messaging.forEach(messageObj =>{
-                        console.log(messageObj);
                         if(messageObj.postback){
                             //handle postbacks
                         }else{
-
+                            return cb(this.messageHandler(messageObj));
                         }
                     })
                 }
             })
+        }
+    }
+    messageHandler(obj){
+        let sender=obj.sender.id;
+        let message=obj.message;
+        if(message.text){
+            let obj = {
+                sender,
+                type: 'text',
+                content: message.text
+            }
+            return obj;
         }
     }
 }

@@ -13,6 +13,8 @@ server.post('/', bodyParser.json({
     verify: f.signatureVerifier,
 }));
 server.post('/',(req,res,next)=>{
-    return f.incoming(req,res);
+    return f.incoming(req,res,data=>{
+        console.log(data);
+    });
 });
 server.listen(PORT, () => console.log(`FBeamer Bot Service running on Port ${PORT}`));
